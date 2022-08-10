@@ -1,58 +1,72 @@
-import ReactApexChart from "react-apexcharts";
+import ApexChart from "react-apexcharts";
 import styled from "styled-components";
 import { PriceData } from "./Coin";
 import { useQuery } from "react-query";
-import { fetchCoinHistory } from "../api";
-import ApexChart from "react-apexcharts";
+import { fetchCoinHistory, fetchCoinTickers } from "../api";
 import { isDarkAtom } from "../atoms";
 import { useRecoilValue } from "recoil";
 
-interface PriceProps {
+interface ChartPrice {
   coinId: string;
 }
 
-const PriceInfoContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-`;
-
-const PriceInfo = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  background-color: ${(props) => props.theme.cardBgColor};
-  padding: 30px 20px;
-  border-radius: 5px;
-  color: ${(props) => props.theme.bgColor};
-  span {
-    &:first-child {
-      text-transform: uppercase;
-      font-weight: 600;
-      color: ${(props) => props.theme.accentColor};
-    }
-    &:nth-child(2) {
-      font-size: 11px;
-      margin-top: 5px;
-      margin-bottom: 20px;
-    }
-    &:last-child {
-      font-size: 30px;
-    }
-  }
-`;
-
-function Price({ tickersData }: { tickersData: PriceData }) {
-  const isDark = useRecoilValue(isDarkAtom);
-  return (
-    <PriceInfoContainer>
-      <PriceInfo>
-        <span>percent change</span>
-        <span>[1 year]</span>
-        <span>{tickersData.quotes.USD.percent_change_1y}</span>
-      </PriceInfo>
-    </PriceInfoContainer>
-  );
+interface IHistorical {
+  time_open: string;
+  time_close: string;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  market_cap: number;
 }
+
+function Price({coinId}: ChartPrice){
+  const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () => fetchCoinHistory(coinId));
+  return(
+    <div>
+    {isLoading ? (
+      "Loading..."
+    ) : (
+      <ApexChart
+        type="line"
+        series={[
+          {
+            name: "Price",
+            data: data?.map((price) => price.high)??[],
+          },
+        ]}
+        options={{
+          theme: {
+            mode: "dark",
+          },
+          chart: {
+            height: 500,
+            width: 500,
+            toolbar: {
+              show: false,
+            },
+            background: "transparent",
+          },
+          grid: { show: false },
+          stroke: {
+            curve: "smooth",
+            width: 4,
+          },
+          yaxis: {
+            show: false,
+          },
+          xaxis: {
+            axisBorder: { show: false },
+            axisTicks: { show: false },
+            labels: { show: false },
+          },
+        }}
+      />
+    )}
+  </div>
+);
+}
+
 
 export default Price;

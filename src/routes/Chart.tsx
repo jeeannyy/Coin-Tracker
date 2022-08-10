@@ -34,7 +34,7 @@ function Chart({ coinId }: ChartProps) {
   return (
     <div>
       {historyLoading ? (
-        "Loading chart..."
+        "Loading..."
       ) : (
         <ReactApexChart
           type="candlestick"
@@ -87,8 +87,8 @@ function Chart({ coinId }: ChartProps) {
             plotOptions: {
               candlestick: {
                 colors: {
-                  upward: "#ff009d",
-                  downward: "#0be881",
+                  upward: "#00b894",
+                  downward: "#e84393"
                 },
               },
             },

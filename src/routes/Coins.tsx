@@ -1,4 +1,4 @@
-import { faMoon, faLightbulb } from "@fortawesome/free-solid-svg-icons";
+import { faMoon, faLightbulb, faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
@@ -24,8 +24,9 @@ const Header = styled.header`
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
-  text-transform: uppercase;
+font-size: 60px;
+font-family: "Arvo";
+font-weight: 700;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -81,11 +82,16 @@ function Coins() {
         <title>Coin Tracker</title>
       </Helmet>
       <NavigationContainer>
+      <NavigationIcon>
+          <Link to={"/"}>
+            <FontAwesomeIcon icon={faHome} />
+          </Link>
+        </NavigationIcon>
         {isDark ? (
           <NavigationIcon onClick={toggleDarkAtom}>
             <Link to={"/"}>
               <FontAwesomeIcon icon={faMoon} />
-            </Link>
+            </Link >
           </NavigationIcon>
         ) : (
           <NavigationIcon onClick={toggleDarkAtom}>

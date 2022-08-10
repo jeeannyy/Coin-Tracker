@@ -13,7 +13,7 @@ import Chart from "./Chart";
 import Price from "./Price";
 import { Helmet } from "react-helmet";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faMoon, faLightbulb } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isDarkAtom } from "../atoms";
 
@@ -32,7 +32,9 @@ const Header = styled.header`
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
+font-size: 60px;
+font-family: "Arvo";
+font-weight: 700;
   color: ${(props) => props.theme.accentColor};
 `;
 
@@ -213,7 +215,7 @@ function Coin() {
         </NavigationIcon>
         {isDark ? (
           <NavigationIcon onClick={toggleDarkAtom}>
-            <FontAwesomeIcon icon={faSun} />
+            <FontAwesomeIcon icon={faLightbulb} />
           </NavigationIcon>
         ) : (
           <NavigationIcon onClick={toggleDarkAtom}>
@@ -279,7 +281,7 @@ function Coin() {
             <Route path={`chart`} element={<Chart coinId={coinId!} />} />
             <Route
               path={`price`}
-              element={<Price tickersData={tickersData!} />}
+              element={<Price coinId={coinId!} />}
             />
           </Routes>
         </>
