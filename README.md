@@ -1,6 +1,6 @@
 # Coin tracker
 
-This is coin tracker application for top ranking cryptos. You can find the real-time ranking, price chart, and history.
+This is a coin tracker application for top-ranking cryptos. You can find the real-time ranking, price chart, and history.
 https://jeeannyy.github.io/Coin-Tracker/
 
 
